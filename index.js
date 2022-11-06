@@ -4,8 +4,57 @@ const path = require('path');
 const fs = require('fs');
 const {Configuration, OpenAIApi} = require("openai")
 const tesseract = require("node-tesseract-ocr")
-const openaiKey = process.env.OPENAI_API_KEY
+var secret = require('./secret.json');
+const openaiKey =  secret.openai;
 //import { doc, setDoc, Timestamp } from "firebase/firestore"; 
+const { Storage } = require("@google-cloud/storage");
+const { initializeApp } = require('firebase-admin/app');
+
+initializeApp({
+    credential: GOOGLE_APPLICATION_CREDENTIALS,
+    databaseURL: 'https://project-314684023612.firebaseio.com'
+}); 
+function process(images){
+    tesseract.recognize(images, config)
+    .then((text) => {
+        const completion = openai.createCompletion({
+            model: "text-davinci-002",
+            prompt: "Create question and answer pairs about: "+ text,
+          });
+        
+        let que = []
+        let ans = []
+        let fcards = []
+        let qapairs = completion.split('\n');
+        
+        for(i = 0; i<completion.length; i++){
+            if(i%2 == 0){
+                que.push(qapairs[i]);
+            }
+            else{
+                ans.push(qapairs[i]);
+            }
+        }
+
+        for(i=0; i<que.length; i++){
+            fcards.push(new Flashcard(que[i],ans[i]))
+        }
+        //push Set of Flashcards to User
+       // const userSet = new Set('uid', 'name', userSet);
+        return userSet;
+    })
+    .catch((error) => {
+        console.log(error.message)
+    })
+
+}
+    
+
+const storage = new Storage({
+    keyFilename: "./getnudge-e3e3e-fb3e640c3997.json",
+ });
+
+let bucketName = "gs://getnudge-e3e3e.appspot.com";
 
 
 const config = {
@@ -67,20 +116,32 @@ app.get("/history", (req, res) => {
     res.sendFile(__dirname + "/views/history.html");
 });
 
-app.get("/api/process", (req, res) => {
+app.get("/api/process", async (request, res) => {
 
   // call firebase storage for data
   
+  console.log("[api] processing started")
+
   
-  
-  res.send("OK");
+  const bucketName = "getnudge-e3e3e.appspot.com";
+  const srcFilename = `images/${request.query.fileName}`;
+  const destFilename = __dirname + `/downloaded/${request.query.fileName}`;
+  const storage = new Storage();
+  const options = {
+    destination: destFilename,
+  };
+
+    await storage.bucket(bucketName).file(srcFilename).download(options);
+
+
+
+  res.send(process(destFilename));
 })
 
 
 
 
 
-const port = process.env.PORT || 8080;
 
 app.listen(8080, () => console.log('Server is running...'));
 
@@ -155,3 +216,37 @@ const docData = {
     }
 };
 //await setDoc(doc(db, "data", "one"), docData);*/
+
+
+//User class
+class User {
+    constructor (name, uid, sets) {
+        this.name = name;
+        this.uid = uid;
+        this.sets = sets;
+    }
+    toString() {
+        return this.name + ', ' + this.uid + ', ' + this.sets;
+    }
+}
+
+class Set {
+    constructor (flashcards){
+    
+      this.flashcards = flashcards;
+    }
+}
+
+//Flashcard class
+class Flashcard {
+    constructor (question, answer) {
+        this.question = question;
+        this.answer = answer;
+    }
+    toString() {
+        return this.name + ', ' + this.state + ', ' + this.country;
+    }
+}
+
+
+
