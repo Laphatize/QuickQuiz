@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>QuickQuiz</title>
+</head>
+<body>
+    
+<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-gray-900 ">
+    <div class="container flex flex-wrap justify-between items-center mx-auto mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <a href="./dashboard" class="flex ">
+          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">QuickQuiz</span>
+      </a>
+            <a href="./" class="flex ">
+        <span class="self-center text-xl  whitespace-nowrap dark:text-white hover:">Dashboard</span>
+    </a>
+        <a href="./" class="flex ">
+        <span class="self-center text-xl  whitespace-nowrap dark:text-white">History</span>
+    </a>
+      <a href="./" class="flex ">
+        <span class="self-center text-xl  whitespace-nowrap dark:text-white">Logout</span>
+    </a>
+    </div>
+  </nav>
+
+   
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 class="text-black text-3xl font-semibold mt-4">What's up, <span id="username" class="text-blue-500">username</span>?</h1>
+        <div class="columns-2 mt-4">
+            <div onclick="document.getElementbyId" class="card hover:bg-gray-300 bg-gray-200 rounded-lg px-2 py-1 mx-auto text-2xl py-5 text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-center mx-auto w-10 h-10">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+</svg>
+
+                <h1 class="font-semibold">Scan your papers</h1>
+               <p class="text-sm">.PNG, .PDF, and .JPG</p>
+
+            </div>
+             <div class="card bg-gray-200 hover:bg-gray-300 rounded-lg px-2 py-5 mx-auto text-2xl text-center">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-3xl w-10 h-10 mx-auto text-center">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+</svg>
+
+               <h1 class="font-semibold">Upload a document</h1>
+               <p class="text-sm">.DOCX, .TXT, and .PDF</p>
+            </div>
+        </div>
+  
+   
+        <div class="mx-auto text-center">
+    </div>
+
+      <hr>
+              <h1 class="mt-6 text-black text-3xl font-semibold mt-4">Looking for your past uploads?</h1>
+            <span id="noupload" class="inline-flex text-xl"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-1">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+</svg>
+ Looks like you haven't uploaded anything yet. Try scanning some of your notes!</span>
+     </div>
+
+  <div id="scan" class="relative z-10 " aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+      <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+        <div>
+    
+          <div class="mt-3 text-center sm:mt-5" id="">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-center mx-auto w-10 h-10">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+</svg>
+            <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Scan Documents</h3>
+            <div class="mt-2 text-left">
+              <span>Collection Name</span><br>
+              <input placeholder="Something creative!" class="bg-gray-200 rounded-lg px-2 py-1 w-full"></input>
+              <br><br>
+                        <span  class="mt-6" >Related Documents</span><br>
+
+                  <input type="file" id="file" name="file" multiple />
+
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 sm:mt-6">
+          <button type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm">Create Deck</button>
+          <a href=""r></a>        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+
+  <script src="./index.js"></script>
+      <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWU_GgmmT4iWufE-cnOlqhyaf5f4RIErA",
+            authDomain: "getnudge-e3e3e.firebaseapp.com",
+            projectId: "getnudge-e3e3e",
+            storageBucket: "getnudge-e3e3e.appspot.com",
+            messagingSenderId: "314684023612",
+            appId: "1:314684023612:web:f0748b6886a1392aae3439",
+            measurementId: "G-JL21JMVT0P"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.start('#firebaseui-auth-container', {
+                                                signInOptions: [
+                                                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                                                    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                                                    firebase.auth.GithubAuthProvider.PROVIDER_ID
+                                                ],
+                                                signInSuccessUrl: '../dashboard'
+                                                // Other config options...
+       });
+
+       var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    </script>
+</body>

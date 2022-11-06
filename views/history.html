@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<head>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>QuickQuiz History</title>
+  
+</head>
+<body>
+    
+    <nav class="relative flex items-center justify-between sm:h-10 md:justify-center" aria-label="Global">
+                <div class="flex flex-1 items-center md:absolute md:inset-y-0 md:left-0">
+                  <div class="flex w-full items-center justify-between md:w-auto">
+                    <a href="#">
+                      <h1 class= "text-blue-600 font-bold text-4xl text-white">QuickQuiz</h1>
+                    </a>
+                    <div class="-mr-2 flex items-center md:hidden">
+                      <button type="button" class="inline-flex items-center justify-center rounded-md bg-gray-50 p-2 text-gray-400 hover:bg-gray-900 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Heroicon name: outline/bars-3 -->
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+             
+                <div class="hidden md:absolute md:inset-y-0 md:right-0 md:flex md:items-center md:justify-end">
+                  <span class="inline-flex rounded-md shadow">
+                    <a href="#" onclick="document.getElementById('login').classList.remove('hidden');" class="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base text-blue-600 hover:bg-gray-50 font-bold">Login</a>
+                  </span>
+                </div>
+              </nav>
+    </div>
+    <div class="px-2 py-2 bg-gray-800">
+    </div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 class="text-blue-600 text-3xl font-semibold mt-4">Date Taken: 11/6/22</h1>
+        <div class="container mx-auto px-4 bg-">
+         <div class="bg-local">
+           <img style="" class="w-56" src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/adventure-time-hey-ice-king/a/a6/JakeHeadshot.jpg">
+           <div>
+             
+             <div id="login" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" onclick="document.getElementById('login').classList.add('hidden');" aria-hidden="true"></div>
+           
+         </div>
+        </div>
+        <!--textarea id="in" rows="4"  class="w-full bg-gray-200 rounded mt-2 px-3 py-2 text-xl shadow"></textarea-->
+  </body>
+    
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWU_GgmmT4iWufE-cnOlqhyaf5f4RIErA",
+            authDomain: "getnudge-e3e3e.firebaseapp.com",
+            projectId: "getnudge-e3e3e",
+            storageBucket: "getnudge-e3e3e.appspot.com",
+            messagingSenderId: "314684023612",
+            appId: "1:314684023612:web:f0748b6886a1392aae3439",
+            measurementId: "G-JL21JMVT0P"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+    
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.start('#firebaseui-auth-container', {
+                                                signInOptions: [
+                                                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                                                    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                                                    firebase.auth.GithubAuthProvider.PROVIDER_ID
+                                                ],
+                                                signInSuccessUrl: '../dashboard'
+                                                // Other config options...
+       });
+
+       var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    </script>
+</body>
